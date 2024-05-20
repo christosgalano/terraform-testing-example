@@ -49,6 +49,7 @@ jobs:
           scan-ref: .
           scan-type: fs
           trivy-config: .trivy.yaml
+          output: trivy_results_junit.xml
 
       - name: Checkov scan
         uses: bridgecrewio/checkov-action@v12

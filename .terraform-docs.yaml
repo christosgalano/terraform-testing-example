@@ -2,6 +2,8 @@ formatter: 'markdown table'
 
 version: '>= 0.17.0, < 1.0.0'
 
+header-from: _header.md
+
 recursive:
   enabled: false
   path: modules
@@ -22,8 +24,6 @@ content: |-
   {{ .Inputs }}
 
   {{ .Outputs }}
-
-
 
 output:
   file: README.md

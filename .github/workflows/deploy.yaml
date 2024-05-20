@@ -4,8 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       noop:
-        type: boolean
-        default: false
+        type: choice
+        options:
+          - 'true'
+          - 'false'
         required: true
         description: "Noop (no operations) mode"
 
@@ -29,7 +31,7 @@ jobs:
 
   terraform_deploy:
     name: Deploy Infrastructure
-    if: github.event.inputs.noop == false
+    if: github.event.inputs.noop == 'false'
     needs: terraform_test
     runs-on: ubuntu-latest
     steps:

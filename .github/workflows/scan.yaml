@@ -48,6 +48,7 @@ jobs:
         with:
           scan-ref: .
           scan-type: fs
+          output: trivy_results_junit.xml
           trivy-config: .trivy.yaml
 
       - name: Checkov scan

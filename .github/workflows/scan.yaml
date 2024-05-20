@@ -48,7 +48,6 @@ jobs:
         with:
           scan-ref: .
           scan-type: fs
-          output: trivy_results_junit.xml
           trivy-config: .trivy.yaml
 
       - name: Checkov scan
@@ -59,12 +58,9 @@ jobs:
           output_format: cli,junitxml
           output_file_path: console,checkov_results_junit.xml
 
-      - name: Display results
-        run: ls -al
-
       - name: Publish results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        if: success() || failure()
         with:
           check_name: Scan Results
           files: '*_junit.xml'

@@ -16,22 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  terraform_scan:
-    uses: ./.github/workflows/scan.yaml
-    permissions:
-      contents: read
-      issues: read
-      checks: write
-      pull-requests: write
-
-  terraform_test:
-    uses: ./.github/workflows/test.yaml
-    needs: terraform_scan
-    secrets: inherit
-
-  terraform_deploy:
-    name: Deploy Infrastructure
-    needs: terraform_test
+  terraform_destroy:
+    name: Destroy Infrastructure
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -51,7 +37,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan -no-color -input=false
+        run: terraform plan -destroy -out=tfplan -no-color -input=false
 
       - name: Terraform apply
         if: github.event.inputs.noop == 'false'

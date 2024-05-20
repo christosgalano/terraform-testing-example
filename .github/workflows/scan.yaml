@@ -55,6 +55,8 @@ jobs:
         with:
           directory: .
           config_file: .checkov.yaml
+          output_format: github_failed_only,junitxml
+          output_file_path: console,checkov_results_junit.xml
 
       - name: Display results
         run: ls -al

@@ -13,6 +13,8 @@ sections:
   show: []
 
 content: |-
+  {{ .Header }}
+
   {{ .Requirements }}
 
   {{ .Providers }}

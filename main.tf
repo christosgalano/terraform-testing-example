@@ -81,6 +81,7 @@ resource "azurerm_service_plan" "this" {
   os_type             = "Linux"
   sku_name            = var.app_service_plan.sku
 }
+
 resource "azurerm_linux_web_app" "this" {
   name                      = var.web_app.name
   resource_group_name       = azurerm_resource_group.this.name

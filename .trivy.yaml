@@ -2,6 +2,10 @@ quiet: true
 exit-code: 0
 ignorefile: .trivyignore.yaml
 
+format: template
+template: '@trivy_template.xml'
+output: trivy_results_junit.xml
+
 scan:
   scanners:
     - vuln

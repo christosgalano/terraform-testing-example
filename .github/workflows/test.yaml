@@ -4,11 +4,7 @@ on:
   workflow_call:
     inputs:
       suite:
-        type: choice
-        options:
-          - 'all'
-          - 'contract'
-          - 'integration'
+        type: string
         default: 'all'
         required: true
         description: 'Test suite to run (all, contract, or integration)'
@@ -31,6 +27,13 @@ jobs:
     name: Test Configuration
     runs-on: ubuntu-latest
     steps:
+      - name: Input validation
+        run: |
+          if [[ ! ${{ inputs.suite }} =~ ^(all|contract|integration)$ ]]; then
+            echo "Invalid suite: ${{ inputs.suite }}. Valid values are all, contract, or integration."
+            exit 1
+          fi
+
       - name: Checkout code
         uses: actions/checkout@v4
 

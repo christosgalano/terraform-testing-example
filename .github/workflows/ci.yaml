@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   terraform_scan:
-    uses: ./.github/workflows/templates/scan.yaml
+    uses: ./.github/workflows/scan.yaml
     permissions:
       contents: read
       issues: read
@@ -23,7 +23,7 @@ jobs:
       pull-requests: write
 
   terraform_test:
-    uses: ./.github/workflows/templates/test.yaml
+    uses: ./.github/workflows/test.yaml
     needs: terraform_scan
     secrets: inherit
     with:

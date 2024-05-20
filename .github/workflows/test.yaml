@@ -1,0 +1,31 @@
+name: Terraform Test
+
+on:
+  workflow_call:
+
+jobs:
+  terraform_test:
+    name: Terraform Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">= 1.8, < 2.0"
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Contract tests
+        run: terraform test -filter=tests/contract.tftest.hcl
+
+      - name: Integration tests
+        run : terraform test -filter=tests/integration.tftest.hcl
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}

@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event }}
+  cancel-in-progress: true
+
+jobs:
+  terraform_scan:
+    uses: ./.github/workflows/scan.yaml
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+  
+  terraform_test:
+    uses: ./.github/workflows/test.yaml
+    with:
+      secrets: inherit

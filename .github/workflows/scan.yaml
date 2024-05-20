@@ -2,7 +2,7 @@ name: Terraform Scan
 
 on:
   workflow_call:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event }}
@@ -48,6 +48,8 @@ jobs:
         with:
           scan-ref: .
           scan-type: fs
+          format: template
+          template: '@trivy_template.xml'
           output: trivy_results_junit.xml
           trivy-config: .trivy.yaml
 

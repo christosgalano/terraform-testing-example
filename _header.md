@@ -8,3 +8,7 @@ An opinionated example of how to test Terraform configurations. It includes:
 - **Configuration Files:** These files configure various tools used in the repository, such as tflint, trivy, checkov, and terraform-docs. They demonstrate how to set up and configure these tools for use with Terraform.
 
 This repository follows best practices for Terraform development and uses GitHub workflows for automation. It serves as a practical example of how to test and deploy Terraform code.
+
+![ci](./assets/images/ci.png)
+
+![deploy](./assets/images/deploy.png)

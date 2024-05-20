@@ -33,6 +33,7 @@ jobs:
   terraform_deploy:
     name: Deploy Infrastructure
     needs: terraform_test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

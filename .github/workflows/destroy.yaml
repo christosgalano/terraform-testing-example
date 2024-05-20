@@ -18,6 +18,7 @@ concurrency:
 jobs:
   terraform_destroy:
     name: Destroy Infrastructure
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

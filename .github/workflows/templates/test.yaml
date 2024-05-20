@@ -1,7 +1,6 @@
 name: Terraform Test
 
 on:
-  workflow_dispatch:
   workflow_call:
     secrets:
       ARM_CLIENT_ID:

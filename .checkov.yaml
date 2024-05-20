@@ -2,8 +2,6 @@ quiet: true
 soft-fail: true
 framework: terraform
 skip-path: tests
-output: junitxml
-output-file-path: checkov_results_junit.xml
 
 # https://www.checkov.io/5.Policy%20Index/terraform.html
 skip-check:

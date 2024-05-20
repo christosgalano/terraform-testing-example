@@ -17,22 +17,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # terraform_scan:
-  #   uses: ./.github/workflows/scan.yaml
-  #   permissions:
-  #     contents: read
-  #     issues: read
-  #     checks: write
-  #     pull-requests: write
+  terraform_scan:
+    uses: ./.github/workflows/scan.yaml
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
 
-  # terraform_test:
-  #   uses: ./.github/workflows/test.yaml
-  #   needs: terraform_scan
-  #   secrets: inherit
+  terraform_test:
+    uses: ./.github/workflows/test.yaml
+    needs: terraform_scan
+    secrets: inherit
 
   terraform_deploy:
     name: Deploy Infrastructure
-    # needs: terraform_test
+    needs: terraform_test
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -52,8 +52,8 @@ jobs:
         run: terraform init
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan -no-color -input=false
+        run: terraform plan -out=tfplan -input=false
 
       - name: Terraform apply
         if: github.event.inputs.noop == 'false'
-        run: terraform apply tfplan -no-color
+        run: terraform apply tfplan

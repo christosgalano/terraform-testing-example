@@ -1,7 +1,21 @@
 name: Terraform Test
 
 on:
+  workflow_dispatch:
   workflow_call:
+    secrets:
+      ARM_CLIENT_ID:
+        required: true
+        description: 'Azure Service Principal Client ID'
+      ARM_CLIENT_SECRET:
+        required: true
+        description: 'Azure Service Principal Client Secret'
+      ARM_TENANT_ID:
+        required: true
+        description: 'Azure Service Principal Tenant ID'
+      ARM_SUBSCRIPTION_ID:
+        required: true
+        description: 'Azure Service Principal Subscription ID'
 
 jobs:
   terraform_test:

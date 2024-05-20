@@ -1,14 +1,13 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - v*
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      noop:
+        type: boolean
+        default: false
+        required: true
+        description: "Set noop (no operations) mode"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event }}
@@ -25,5 +24,33 @@ jobs:
   
   terraform_test:
     uses: ./.github/workflows/test.yaml
-    with:
-      secrets: inherit
+    needs: terraform_scan
+    secrets: inherit
+
+  terraform_deploy:
+    name: Terraform Deploy
+    if: !github.event.inputs.noop
+    needs: terraform_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">= 1.8, < 2.0"
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform plan
+        run: terraform plan -out=tfplan -no-color -input=false
+      
+      - name: Terraform apply
+        run: terraform apply tfplan -no-color
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}

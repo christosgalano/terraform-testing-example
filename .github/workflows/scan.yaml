@@ -1,8 +1,18 @@
 name: Terraform Scan
 
 on:
-  push:
+  # push:
+  #   branches:
+  #     - '*'
+  # pull_request:
+  #   branches:
+  #     - main
   workflow_call:
+  workflow_dispatch: 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event }}
+  cancel-in-progress: true
 
 jobs:
   terraform_scan:

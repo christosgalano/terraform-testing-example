@@ -3,7 +3,7 @@ soft-fail: true
 framework: terraform
 skip-path: tests
 
-output-format: cli,junitxml
+output: cli,junitxml
 output-file-path: console,checkov_results_junit.xml
 
 # https://www.checkov.io/5.Policy%20Index/terraform.html

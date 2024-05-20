@@ -31,7 +31,7 @@ jobs:
           terraform_version: ">= 1.8, < 2.0"
 
       - name: Terraform init
-        run: terraform init
+        run: terraform init -backend=false -input=false
 
       - name: Contract tests
         run: terraform test -filter=tests/contract.tftest.hcl

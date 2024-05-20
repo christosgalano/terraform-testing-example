@@ -21,7 +21,7 @@ jobs:
       issues: read
       checks: write
       pull-requests: write
-  
+
   terraform_test:
     uses: ./.github/workflows/test.yaml
     needs: terraform_scan
@@ -29,7 +29,7 @@ jobs:
 
   terraform_deploy:
     name: Deploy Infrastructure
-    if: !github.event.inputs.noop
+    if: github.event.inputs.noop == false
     needs: terraform_test
     runs-on: ubuntu-latest
     steps:
@@ -43,10 +43,15 @@ jobs:
 
       - name: Terraform init
         run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Terraform plan
         run: terraform plan -out=tfplan -no-color -input=false
-      
+
       - name: Terraform apply
         run: terraform apply tfplan -no-color
         env:

@@ -1,0 +1,24 @@
+quiet: true
+soft-fail: true
+framework: terraform
+skip-path: tests
+
+# https://www.checkov.io/5.Policy%20Index/terraform.html
+skip-check:
+  # Ensure ACR set to disable public networking.
+  - CKV_AZURE_139
+
+  # Ensures that ACR uses signed/trusted images.
+  - CKV_AZURE_164
+
+  # Ensure container image quarantine, scan, and mark images verified.
+  - CKV_AZURE_166
+
+  # Ensure a retention policy is set to cleanup untagged manifests.
+  - CKV_AZURE_167
+
+  # Ensure Azure Container Registry (ACR) is zone redundant.
+  - CKV_AZURE_233
+
+  # Ensure dedicated data endpoints are enabled.
+  - CKV_AZURE_237

@@ -1,0 +1,21 @@
+quiet: true
+exit-code: 0
+ignorefile: .trivyignore.yaml
+
+format: template
+template: trivy_template.xml
+
+scan:
+  scanners:
+    - vuln
+    - misconfig
+    - secret
+  skip-dirs:
+    - examples/
+
+misconfiguration:
+  include-non-failures: true
+  scanners:
+    - terraform
+  terraform:
+    exclude-downloaded-modules: false

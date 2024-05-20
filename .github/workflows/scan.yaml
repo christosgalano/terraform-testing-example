@@ -58,6 +58,20 @@ jobs:
           # output_format: cli,junitxml
           # output_file_path: console,checkov_results_junit.xml
 
+      - name: Display results
+        run: |
+          echo "##[group]Tflint Results"
+          cat tflint_results_junit.xml
+          echo "##[endgroup]"
+
+          echo "##[group]Trivy Results"
+          cat trivy_results_junit.xml
+          echo "##[endgroup]"
+
+          echo "##[group]Checkov Results"
+          cat checkov_results_junit.xml
+          echo "##[endgroup]"
+
       - name: Publish results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()

@@ -7,7 +7,7 @@ on:
         type: boolean
         default: false
         required: true
-        description: "Set noop (no operations) mode"
+        description: "Noop (no operations) mode"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event }}

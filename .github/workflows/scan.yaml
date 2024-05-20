@@ -1,3 +1,5 @@
+name: Scan
+
 on:
   workflow_call:
 

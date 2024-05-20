@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   terraform_scan:
-    name: Terraform Scan
+    name: Scan Configuration
     runs-on: ubuntu-latest
     permissions:
       contents: read

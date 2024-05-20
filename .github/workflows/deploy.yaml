@@ -28,7 +28,7 @@ jobs:
     secrets: inherit
 
   terraform_deploy:
-    name: Terraform Deploy
+    name: Deploy Infrastructure
     if: !github.event.inputs.noop
     needs: terraform_test
     runs-on: ubuntu-latest

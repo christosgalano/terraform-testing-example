@@ -19,7 +19,7 @@ on:
 
 jobs:
   terraform_test:
-    name: Terraform Test
+    name: Test Configuration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

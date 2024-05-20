@@ -1,12 +1,6 @@
-name: Terraform Scan
+name: Scan
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   workflow_call:
 
 concurrency:

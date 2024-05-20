@@ -1,7 +1,17 @@
-name: Terraform Test
+name: Test
 
 on:
   workflow_call:
+    inputs:
+      suite:
+        type: choice
+        options:
+          - 'all'
+          - 'contract'
+          - 'integration'
+        default: 'all'
+        required: true
+        description: 'Test suite to run (all, contract, or integration)'
     secrets:
       ARM_CLIENT_ID:
         required: true
@@ -33,9 +43,11 @@ jobs:
         run: terraform init -backend=false -input=false
 
       - name: Contract tests
+        if: ${{ inputs.suite == 'all' || inputs.suite == 'contract' }}
         run: terraform test -filter=tests/contract.tftest.hcl
 
       - name: Integration tests
+        if: ${{ inputs.suite == 'all' || inputs.suite == 'integration' }}
         run : terraform test -filter=tests/integration.tftest.hcl
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

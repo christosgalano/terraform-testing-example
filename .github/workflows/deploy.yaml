@@ -1,4 +1,4 @@
-name: Terraform Deploy
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   terraform_scan:
-    uses: ./.github/workflows/scan.yaml
+    uses: ./.github/workflows/templates/scan.yaml
     permissions:
       contents: read
       issues: read
@@ -26,9 +26,11 @@ jobs:
       pull-requests: write
 
   terraform_test:
-    uses: ./.github/workflows/test.yaml
+    uses: ./.github/workflows/templates/test.yaml
     needs: terraform_scan
     secrets: inherit
+    with:
+      suite: 'all'
 
   terraform_deploy:
     name: Deploy Infrastructure

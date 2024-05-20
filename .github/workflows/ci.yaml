@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event }}
+  cancel-in-progress: true
+
+jobs:
+  terraform_scan:
+    uses: ./.github/workflows/templates/scan.yaml
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+
+  terraform_test:
+    uses: ./.github/workflows/templates/test.yaml
+    needs: terraform_scan
+    secrets: inherit
+    with:
+      suite: 'contract'

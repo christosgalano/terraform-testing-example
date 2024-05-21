@@ -1,6 +1,7 @@
 name: Deploy
 
 on:
+  # Update based on the way you want to deploy: https://christosgalano.github.io/branch-deployment-models/
   workflow_dispatch:
     inputs:
       noop:
@@ -23,7 +24,6 @@ jobs:
       contents: read
       issues: read
       checks: write
-      pull-requests: write
 
   terraform_test:
     uses: ./.github/workflows/test.yaml

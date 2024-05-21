@@ -1,13 +1,10 @@
 name: Continuous Integration
 
 on:
+  # Update based on the way you work: https://christosgalano.github.io/branch-deployment-models/
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event }}
@@ -28,3 +25,25 @@ jobs:
     secrets: inherit
     with:
       suite: 'contract'
+
+  terraform_docs:
+    name: Terraform Docs
+    needs: terraform_test
+    if: github.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Run terraform-docs
+        uses: terraform-docs/gh-actions@v1.1.0
+        with:
+          working-dir: .
+          template: ""
+          output-method: replace
+          config-file: .terraform-docs.yaml
+          git-push: "true"

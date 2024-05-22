@@ -18,7 +18,7 @@ concurrency:
 jobs:
   # Require approval in the form of an open issue in order to destroy the infrastructure.
   approve-teardown:
-    name: Approve Teardown
+    name: Approve Infrastructure Teardown
     runs-on: ubuntu-latest
     permissions:
       issues: write

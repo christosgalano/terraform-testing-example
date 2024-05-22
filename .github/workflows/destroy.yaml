@@ -17,8 +17,8 @@ concurrency:
 
 jobs:
   # Require approval in the form of an open issue in order to destroy the infrastructure.
-  approve:
-    name: approve-infra-teardown
+  approve-teardown:
+    name: Approve Teardown
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -29,13 +29,13 @@ jobs:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: christosgalano
           minimum-approvals: 1
-          issue-title: "Approve infrastructure teardown."
+          issue-title: 'Approve infrastructure teardown.'
           exclude-workflow-initiator-as-approver: false
 
   terraform_destroy:
     name: Destroy Infrastructure
     if: github.ref == 'refs/heads/main'
-    needs: approve
+    needs: approve-teardown
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

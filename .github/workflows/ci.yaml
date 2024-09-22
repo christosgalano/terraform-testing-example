@@ -40,7 +40,7 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Run terraform-docs
-        uses: terraform-docs/gh-actions@v1.2.2
+        uses: terraform-docs/gh-actions@v1.3.0
         with:
           working-dir: .
           template: ""
